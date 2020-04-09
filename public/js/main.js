@@ -40,7 +40,7 @@ function loadSatellites() {
 					markerStr += `Country: ${satV.country}</br>`;
 					markerStr += `Category: ${satV.categories}</br>`;
 
-					var marker = WE.marker([xyV.coordinates[0], xyV.coordinates[1]]).addTo(map);
+					var marker = WE.marker([xyV.coordinates[1], xyV.coordinates[0]]).addTo(map);
 					marker
 						.bindPopup(
 							markerStr,
