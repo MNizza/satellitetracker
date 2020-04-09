@@ -41,7 +41,7 @@ IndexController.get("/buildSatelliteCollection/:page", (req, res) => {
 	res.json();
 });
 IndexController.get("/buildSatelliteLocationCollection", async (req, res) => {
-	var i = 0;
+	var i = 500;
 	var satellites = await SatelliteModel.find().exec();
 	//the API requires 1 second between calls, hence the interval
 	var interval = setInterval(() => {
