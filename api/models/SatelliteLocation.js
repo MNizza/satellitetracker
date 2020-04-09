@@ -12,6 +12,6 @@ const SatelliteLocationSchema = new Schema({
 
 // Compile model from schema
 module.exports = mongoose.model(
-	"SatelliteLocation",
+	"SatelliteLocationModel",
 	SatelliteLocationSchema
 );
