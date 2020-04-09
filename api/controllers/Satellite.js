@@ -4,12 +4,12 @@ const fs = require("fs");
 const path = require("path");
 const cdir = path.join(path.dirname(fs.realpathSync(__filename)), "");
 const unirest = require("unirest");
-const SatelliteModel = require("../models/Satellite");
-const SatelliteLocationModel = require("../models/SatelliteLocation");
+const Satellite = require("../models/Satellite");
+const SatelliteLocation = require("../models/SatelliteLocation");
 
 SatelliteController.get("/", async (req, res) => {
-	var satellites = await SatelliteModel.find().exec();
-	var satelliteXY = await SatelliteLocationModel.find().exec();
+	var satellites = await Satellite.find().exec();
+	var satelliteXY = await SatelliteLocation.find().exec();
 	
 	res.json({satellites, satelliteXY})
 });
