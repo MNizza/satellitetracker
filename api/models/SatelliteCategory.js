@@ -10,4 +10,4 @@ const SatelliteCategorySchema = new Schema({
 });
 
 // Compile model from schema
-module.exports = mongoose.model('SatelliteCategoryModel', SatelliteCategorySchema);
+module.exports = mongoose.model('SatelliteCategory', SatelliteCategorySchema);

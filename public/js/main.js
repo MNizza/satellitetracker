@@ -17,7 +17,7 @@ function initialize() {
 			],
 			minZoom: 0,
 			maxZoom: 16,
-			attribution: "WebGLEarth example",
+			attribution: "Satellite Tracker(Marcus N.)",
 			tms: true,
 		}
 	).addTo(map);

@@ -10,4 +10,4 @@ const SatelliteOrbitSchema = new Schema({
 });
 
 // Compile model from schema
-module.exports = mongoose.model('SatelliteOrbitModel', SatelliteOrbitSchema);
+module.exports = mongoose.model('SatelliteOrbit', SatelliteOrbitSchema);

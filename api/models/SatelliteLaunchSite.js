@@ -14,4 +14,4 @@ const SatelliteSiteSchema = new Schema({
 });
 
 // Compile model from schema
-module.exports = mongoose.model('SatelliteSiteModel', SatelliteSiteSchema);
+module.exports = mongoose.model('SatelliteSite', SatelliteSiteSchema);
