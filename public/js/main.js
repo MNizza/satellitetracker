@@ -5,6 +5,7 @@ $(document).ready((e) => {
 		center: [37.0902, -95.7129],
 		zoom: 3,
 		dragging: true,
+		tilting: false,
 		scrollWheelZoom: true,
 	});
 	var satCollection = [];
@@ -18,7 +19,7 @@ $(document).ready((e) => {
 				attribution: "Satellite Tracker(Marcus N.)",
 			}
 		).addTo(map);
-		var marker = WE.marker([37.0902, -95.7129]).addTo(map);
+		// var marker = WE.marker([37.0902, -95.7129]).addTo(map);
 		$("#earth_div")
 			.css("background-image", "url(img/d099fbe1334992232264f479a516983e.jpg)")
 			.css("background-size", "100% 100%");
@@ -54,28 +55,33 @@ $(document).ready((e) => {
 					}
 				});
 			});
-
 			$.each(res.satelliteOrbit, (orbK, orbV) => {
-				$.each(res.satelliteOrbit[orbK].coordinates, (xyTrackK, xyTrackV) => {
-					if (count > 100) return;
-					var polyline = WE.polygon(
-						[xyTrackV.lat, xyTrackV.lng],
-						{
-							color: "#FF0000",
+				$.each(orbV, (xyCoordsK, xyCoordsV) => {
+					$.each(xyCoordsV, (xyTrackK, xyTrackV) => {
+						console.log(orbV)
+						var polyline = WE.polygon([xyTrackV.lat, xyTrackV.lng], {
+							color: "#c3ac6c",
 							opacity: 1,
-							fillColor: "#FF0000",
+							fillColor: "#c3ac6c",
 							fillOpacity: 1,
-							editable: false,
+							editable: true,
 							weight: 2,
-						}
-					);
-					polyline.addTo(map);
-					count++;
+						});
+						polyline.addTo(map);
+					});
 				});
 			});
 		});
 	};
+
 	initialize();
 	loadSatellites();
-	console.log(satCollection);
+
+	$("#SearchSatBtn").on("click", (e) => {
+		$.each(satCollection[0].satelliteXY, (satK, satV) => {
+			if (satV.norad_id == $("#NoradID").val()) {
+				map.panTo(satV.coordinates);
+			}
+		});
+	});
 });
