@@ -50,7 +50,7 @@ $(document).ready((e) => {
 							xyV.coordinates[1],
 						]).addTo(map);
 						var latlngs = satV.orbitalTrack.coordinates;
-						var polyline = WE.polygon(latlngs)
+						var polyline = WE.polygon([latlngs])
 							polyline.addTo(map);
 						marker.bindPopup(markerStr, { maxWidth: 150, closeButton: true });
 						
