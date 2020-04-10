@@ -30,9 +30,9 @@ $(document).ready(e => {
 		var a = await $.ajax({
 			url: "/satellite",
 			method: "GET",
-		}).done((res) => {
-			$.each(res.satellites, (satK, satV) => {
-				$.each(res.satelliteXY, (xyK, xyV) => {
+		}).done(async (res) => {
+			$.each(res.satellites, async (satK, satV) => {
+				$.each(res.satelliteXY, async (xyK, xyV) => {
 					var sat = satV;
 					sat.location = xyV;
 					satCollection.push(sat);
