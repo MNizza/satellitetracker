@@ -66,7 +66,7 @@ IndexController.get("/buildSatelliteOrbitTrack", async (req, res) => {
 	var interval = setInterval(() => {
 		if (i <= satellites.length) {
 			if (typeof (satellites[i].number) == "undefined") return;
-			IndexController.loadSatOrbit(satellites[i].number, SpeechSynthesisUtterance[i].orbital_period);
+			IndexController.loadSatOrbit(satellites[i].number, satellites[i].orbital_period);
 		}
 		if (i == satellites.length) console.log("All Satellites Accounted For");
 		i++;
