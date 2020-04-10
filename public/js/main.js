@@ -53,9 +53,9 @@ $(document).ready(async e => {
 					}
 				});
 			});
+			console.log(sats)
 		});
 	};
 	initialize();
 	loadSatellites();
-	console.log(satCollection.length);
 });
