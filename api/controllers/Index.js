@@ -102,6 +102,7 @@ IndexController.loadSatLocation = (number) => {
 	});
 };
 IndexController.loadSatOrbit = (number, orbitalPeriod) => {
+	console.log(`${number} : ${orbitalPeriod}`);
 	let apiReq = unirest(
 		"GET",
 		`https://uphere-space1.p.rapidapi.com/satellite/${number}/orbit`
@@ -123,6 +124,7 @@ IndexController.loadSatOrbit = (number, orbitalPeriod) => {
 			return;
 		}
 		var orbit = JSON.parse(resp.raw_body);
+		console.log(resp);
 		orbit.norad_id = number;
 		var satOrbit = new SatelliteOrbitModel(orbit);
 		satOrbit.save((err, doc) => {
