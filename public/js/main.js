@@ -38,7 +38,7 @@ $(document).ready(e => {
 				var satObj =
 					$.each(res.satelliteXY, (xyK, xyV) => {
 						satsArr[satK].location = xyV;
-						sats.push(satV);
+						satsArr.push(satV);
 
 						if (xyV.norad_id == satV.number) {
 							var markerStr = '';
