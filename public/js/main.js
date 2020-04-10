@@ -1,5 +1,6 @@
-$(document).ready(e => {
+$(document).ready((e) => {
 	const map = WE.map("earth_div", {
+		atmosphere: true,
 		center: [37.0902, -95.7129],
 		zoom: 3,
 		dragging: true,
@@ -7,25 +8,19 @@ $(document).ready(e => {
 	});
 	const satCollection = [];
 	const initialize = () => {
-
-
 		var baselayer = WE.tileLayer(
-			"https://webglearth.github.io/webglearth2-offline/{z}/{x}/{y}.jpg",
+			"http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg",
 			{
-				tileSize: 256,
-				bounds: [
-					[-85, -180],
-					[85, 180],
-				],
 				minZoom: 0,
 				maxZoom: 16,
-				attribution: "Satellite Tracker(Marcus N.)",
-				tms: true,
+				attribution: "Satellite Tracker(Marcus N.)"
 			}
 		).addTo(map);
 		var marker = WE.marker([37.0902, -95.7129]).addTo(map);
-
-	}
+		$("#earth_div")
+			.css("background-image", "url(img/d099fbe1334992232264f479a516983e.jpg)")
+			.css("background-size", "100% 100%");
+	};
 	const loadSatellites = () => {
 		$.ajax({
 			url: "/satellite",
@@ -39,18 +34,17 @@ $(document).ready(e => {
 					satsArr.push(satV);
 
 					if (xyV.norad_id == satV.number) {
-						var markerStr = '';
+						var markerStr = "";
 						markerStr += `${satV.name}</br>`;
 						markerStr += `Launched: ${satV.launch_date}</br>`;
 						markerStr += `Country: ${satV.country}</br>`;
 						markerStr += `Category: ${satV.categories}</br>`;
 
-						var marker = WE.marker([xyV.coordinates[0], xyV.coordinates[1]]).addTo(map);
-						marker
-							.bindPopup(
-								markerStr,
-								{ maxWidth: 150, closeButton: true }
-							)
+						var marker = WE.marker([
+							xyV.coordinates[0],
+							xyV.coordinates[1],
+						]).addTo(map);
+						marker.bindPopup(markerStr, { maxWidth: 150, closeButton: true });
 					}
 				});
 			});
@@ -59,5 +53,5 @@ $(document).ready(e => {
 	};
 	initialize();
 	loadSatellites();
-	console.log(satCollection)
+	console.log(satCollection);
 });

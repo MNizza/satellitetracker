@@ -44,6 +44,7 @@ html {
 	border-bottom: none;
 	border-top: none;
 }
+.container { margin: none; max-width: unset;}
 @keyframes opacity-breath {
 	0% {
 		opacity: 0;
