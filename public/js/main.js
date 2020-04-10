@@ -57,7 +57,7 @@ $(document).ready((e) => {
 
 			$.each(res.satelliteOrbit, (orbK, orbV) => {
 				$.each(res.satelliteOrbit[orbK].coordinates, (xyTrackK, xyTrackV) => {
-					if (count < 5) return;
+					if (count > 5) return;
 					var polyline = WE.polygon(
 						[xyTrackV.lat, xyTrackV.lng],
 						{
