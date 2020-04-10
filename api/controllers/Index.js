@@ -121,6 +121,7 @@ IndexController.loadSatOrbit = (number) => {
 			return;
 		}
 		var orbit = JSON.parse(resp.raw_body);
+		console.log(resp.raw_body);
 		orbit.norad_id = number;
 		var satOrbit = new SatelliteOrbitModel(orbit);
 		satOrbit.save((err, doc) => {
