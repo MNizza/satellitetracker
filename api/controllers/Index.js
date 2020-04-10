@@ -42,7 +42,7 @@ IndexController.get("/buildSatelliteCollection/:page", (req, res) => {
 });
 IndexController.get("/buildSatelliteLocationCollection", async (req, res) => {
 	SatelliteLocationModel.collection.drop();
-	
+
 	var i = 0;
 	var satellites = await SatelliteModel.find().exec();
 	//the API requires 1 second between calls, hence the interval
@@ -53,7 +53,7 @@ IndexController.get("/buildSatelliteLocationCollection", async (req, res) => {
 		if(i == satellites.length) console.log("All Satellites Accounted For");
 		i++;
 	}, 3500);
-
+	console.log("Satellite Location Update In Process.");
 	res.json();
 });
 IndexController.loadSatLocation = (number) => {
