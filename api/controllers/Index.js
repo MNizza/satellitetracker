@@ -7,7 +7,7 @@ const unirest = require("unirest");
 const pageCount = 1000;
 const SatelliteModel = require("../models/Satellite");
 const SatelliteLocationModel = require("../models/SatelliteLocation");
-
+const SatelliteOrbitModel = require("../models/SatelliteOrbit");
 // Home page route.
 IndexController.get("/", (req, res) => {
 	res.render("index");
