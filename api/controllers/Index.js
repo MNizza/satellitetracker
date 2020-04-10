@@ -66,7 +66,7 @@ IndexController.get("/buildSatelliteOrbitTrack", async (req, res) => {
 	var interval = setInterval(() => {
 		if (i <= satellites.length) {
 			if (typeof (satellites[i].number) == "undefined") return;
-			IndexController.loadSatOrbit(satellites[i].number);
+			IndexController.loadSatOrbit(satellites[i].number, SpeechSynthesisUtterance[i].orbital_period);
 		}
 		if (i == satellites.length) console.log("All Satellites Accounted For");
 		i++;
@@ -101,13 +101,15 @@ IndexController.loadSatLocation = (number) => {
 		});
 	});
 };
-IndexController.loadSatOrbit = (number) => {
+IndexController.loadSatOrbit = (number, orbitalPeriod) => {
 	let apiReq = unirest(
 		"GET",
 		`https://uphere-space1.p.rapidapi.com/satellite/${number}/orbit`
 	);
 
-	apiReq.query({});
+	eq.query({
+		"period": orbitalPeriod
+	});
 
 	apiReq.headers({
 		"x-rapidapi-host": "uphere-space1.p.rapidapi.com",
@@ -121,7 +123,6 @@ IndexController.loadSatOrbit = (number) => {
 			return;
 		}
 		var orbit = JSON.parse(resp.raw_body);
-		console.log(resp);
 		orbit.norad_id = number;
 		var satOrbit = new SatelliteOrbitModel(orbit);
 		satOrbit.save((err, doc) => {
