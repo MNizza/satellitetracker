@@ -107,7 +107,7 @@ IndexController.loadSatOrbit = (number, orbitalPeriod) => {
 		`https://uphere-space1.p.rapidapi.com/satellite/${number}/orbit`
 	);
 
-	eq.query({
+	apiReq.query({
 		"period": orbitalPeriod
 	});
 
