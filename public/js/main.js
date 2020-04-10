@@ -10,8 +10,10 @@ $(document).ready((e) => {
 	const satCollection = [];
 	const initialize = () => {
 		var baselayer = WE.tileLayer(
-			"http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg",
+			
+			"https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}@2x.jpg?key=WGCEVQZ0rsY9YIzTDjIr",
 			{
+				tileSize: 512,
 				minZoom: 0,
 				maxZoom: 16,
 				attribution: "Satellite Tracker(Marcus N.)",
