@@ -27,33 +27,35 @@ $(document).ready(e => {
 
 	}
 	const loadSatellites = async () => {
-	var t = await $.ajax({
+		var t = await $.ajax({
 			url: "/satellite",
 			method: "GET",
 		}).done((res) => {
-			var sats = [];
+			var satsArr = [];
 			$.each(res.satellites, (satK, satV) => {
-				$.each(res.satelliteXY, (xyK, xyV) => {
-					var sat = satV;
-					sat.location = xyV;
-					sats.push(sat);
-					if (xyV.norad_id == satV.number) {
-						var markerStr = '';
-						markerStr += `${satV.name}</br>`;
-						markerStr += `Launched: ${satV.launch_date}</br>`;
-						markerStr += `Country: ${satV.country}</br>`;
-						markerStr += `Category: ${satV.categories}</br>`;
 
-						var marker = WE.marker([xyV.coordinates[0], xyV.coordinates[1]]).addTo(map);
-						marker
-							.bindPopup(
-								markerStr,
-								{ maxWidth: 150, closeButton: true }
-							)
-					}
-				});
+				var satObj =
+					$.each(res.satelliteXY, (xyK, xyV) => {
+						satsArr[satK].location = xyV;
+						sats.push(satV);
+
+						if (xyV.norad_id == satV.number) {
+							var markerStr = '';
+							markerStr += `${satV.name}</br>`;
+							markerStr += `Launched: ${satV.launch_date}</br>`;
+							markerStr += `Country: ${satV.country}</br>`;
+							markerStr += `Category: ${satV.categories}</br>`;
+
+							var marker = WE.marker([xyV.coordinates[0], xyV.coordinates[1]]).addTo(map);
+							marker
+								.bindPopup(
+									markerStr,
+									{ maxWidth: 150, closeButton: true }
+								)
+						}
+					});
 			});
-			satCollection.push(sats);
+			satCollection.push(satsArr);
 		});
 	};
 	initialize();
