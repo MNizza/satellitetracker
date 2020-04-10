@@ -1,4 +1,4 @@
-$(document).ready(async e => {
+$(document).ready(e => {
 	const map = WE.map("earth_div", {
 		center: [37.0902, -95.7129],
 		zoom: 3,
@@ -6,7 +6,7 @@ $(document).ready(async e => {
 		scrollWheelZoom: true,
 	});
 	const satCollection = [];
-	const initialize = async () => {
+	const initialize = () => {
 
 
 		var baselayer = WE.tileLayer(
@@ -27,7 +27,7 @@ $(document).ready(async e => {
 
 	}
 	const loadSatellites = async () => {
-		$.ajax({
+	var t = await $.ajax({
 			url: "/satellite",
 			method: "GET",
 		}).done((res) => {
@@ -53,9 +53,8 @@ $(document).ready(async e => {
 					}
 				});
 			});
-			console.log(sats)
+			satCollection.push(sats);
 		});
 	};
-	initialize();
-	loadSatellites();
+	console.log(satCollection)
 });
