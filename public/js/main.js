@@ -57,5 +57,5 @@ $(document).ready(e => {
 
 	initialize();
 	loadSatellites();
-	console.log(satCollection);
+	console.log(satCollection.length);
 });
