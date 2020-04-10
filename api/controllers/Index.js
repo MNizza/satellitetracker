@@ -48,7 +48,7 @@ IndexController.get("/buildSatelliteLocationCollection", async (req, res) => {
 	//the API requires 1 second between calls, hence the interval
 	var interval = setInterval(() => {
 		if (i <= satellites.length) {
-			if (typeof (satellites[i].number) == "undefined") return;
+			if (typeof satellites[i].number == "undefined") return;
 			IndexController.loadSatLocation(satellites[i].number);
 		}
 		if (i == satellites.length) console.log("All Satellites Accounted For");
@@ -65,8 +65,11 @@ IndexController.get("/buildSatelliteOrbitTrack", async (req, res) => {
 	//the API requires 1 second between calls, hence the interval
 	var interval = setInterval(() => {
 		if (i <= satellites.length) {
-			if (typeof (satellites[i].number) == "undefined") return;
-			IndexController.loadSatOrbit(satellites[i].number, satellites[i].orbital_period);
+			if (typeof satellites[i].number == "undefined") return;
+			IndexController.loadSatOrbit(
+				satellites[i].number,
+				satellites[i].orbital_period
+			);
 		}
 		if (i == satellites.length) console.log("All Satellites Accounted For");
 		i++;
@@ -96,8 +99,11 @@ IndexController.loadSatLocation = (number) => {
 		var location = JSON.parse(resp.raw_body);
 		var satXY = new SatelliteLocationModel(location);
 		satXY.save((err, doc) => {
-			if (err) console.log(`Error, Could Not Store Sat Location (norad_id: ${number})`)
-			else console.log(`Success, New Location Stored (norad_id: ${number})`)
+			if (err)
+				console.log(
+					`Error, Could Not Store Sat Location (norad_id: ${number})`
+				);
+			else console.log(`Success, New Location Stored (norad_id: ${number})`);
 		});
 	});
 };
@@ -109,7 +115,7 @@ IndexController.loadSatOrbit = (number, orbitalPeriod) => {
 	);
 
 	apiReq.query({
-		"period": orbitalPeriod
+		period: orbitalPeriod,
 	});
 
 	apiReq.headers({
@@ -123,13 +129,21 @@ IndexController.loadSatOrbit = (number, orbitalPeriod) => {
 			console.log(`Error, Satellite Not Found (norad_id: ${number})`);
 			return;
 		}
-		var orbit = JSON.parse(resp.raw_body);
-		console.log(resp);
+		var coords = JSON.parse(resp.raw_body);
+		var orbit = {};
+
 		orbit.norad_id = number;
+		orbit.coordinates = coords;
+
 		var satOrbit = new SatelliteOrbitModel(orbit);
+
 		satOrbit.save((err, doc) => {
-			if (err) console.log(`Error, Could Not Store Sat Orbital Track (norad_id: ${number})`)
-			else console.log(`Success, Sat Orbital Track Stored (norad_id: ${number})`)
+			if (err)
+				console.log(
+					`Error, Could Not Store Sat Orbital Track (norad_id: ${number})`
+				);
+			else
+				console.log(`Success, Sat Orbital Track Stored (norad_id: ${number})`);
 		});
 	});
 };

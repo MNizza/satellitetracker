@@ -4,8 +4,7 @@ const Schema = mongoose.Schema;
 
 const SatelliteOrbitSchema = new Schema({
 	norad_id: String,
-	lat: Number,
-	lng: Number
+	coordinates: Array
 });
 
 // Compile model from schema
