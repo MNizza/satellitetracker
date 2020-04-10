@@ -1,4 +1,4 @@
-$('#loading').hide();
+$("#loading").hide();
 $(document).ready((e) => {
 	const map = WE.map("earth_div", {
 		atmosphere: true,
@@ -14,7 +14,7 @@ $(document).ready((e) => {
 			{
 				minZoom: 0,
 				maxZoom: 16,
-				attribution: "Satellite Tracker(Marcus N.)"
+				attribution: "Satellite Tracker(Marcus N.)",
 			}
 		).addTo(map);
 		var marker = WE.marker([37.0902, -95.7129]).addTo(map);
@@ -23,11 +23,13 @@ $(document).ready((e) => {
 			.css("background-size", "100% 100%");
 	};
 	const loadSatellites = () => {
-		$('#loading').show();
+		$("#loading").show();
 		$.ajax({
 			url: "/satellite",
 			method: "GET",
 		}).done((res) => {
+			$("#loading").hide();
+
 			var satsArr = [];
 			$.each(res.satellites, (satK, satV) => {
 				satV.location = {};
@@ -52,7 +54,6 @@ $(document).ready((e) => {
 			});
 			satCollection.push(satsArr);
 		});
-		$('#loading').hide();
 	};
 	initialize();
 	loadSatellites();
