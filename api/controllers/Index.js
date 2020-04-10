@@ -48,9 +48,10 @@ IndexController.get("/buildSatelliteLocationCollection", async (req, res) => {
 	//the API requires 1 second between calls, hence the interval
 	var interval = setInterval(() => {
 		if (i <= satellites.length) {
+			if (typeof (satellites[i].number) == "undefined") return;
 			IndexController.loadSatLocation(satellites[i].number);
 		}
-		if(i == satellites.length) console.log("All Satellites Accounted For");
+		if (i == satellites.length) console.log("All Satellites Accounted For");
 		i++;
 	}, 3500);
 	console.log("Satellite Location Update In Process.");
@@ -78,9 +79,9 @@ IndexController.loadSatLocation = (number) => {
 		var location = JSON.parse(resp.raw_body);
 		var satXY = new SatelliteLocationModel(location);
 		satXY.save((err, doc) => {
-			if(err) console.log(`Error, Could Not Store Sat Location (norad_id: ${number})`)
+			if (err) console.log(`Error, Could Not Store Sat Location (norad_id: ${number})`)
 			else console.log(`Success, New Location Stored (norad_id: ${number})`)
-		 });
+		});
 	});
 };
 IndexController.isJSON = (str) => {
