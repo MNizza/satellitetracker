@@ -34,27 +34,25 @@ $(document).ready(e => {
 			var satsArr = [];
 			$.each(res.satellites, (satK, satV) => {
 				satV.location = {};
-				satsArr.push(satV);
-				var satObj =
-					$.each(res.satelliteXY, (xyK, xyV) => {
-						satsArr[satK].location = xyV;
-						satsArr.push(satV);
+				$.each(res.satelliteXY, (xyK, xyV) => {
+					satV.location = xyV;
+					satsArr.push(satV);
 
-						if (xyV.norad_id == satV.number) {
-							var markerStr = '';
-							markerStr += `${satV.name}</br>`;
-							markerStr += `Launched: ${satV.launch_date}</br>`;
-							markerStr += `Country: ${satV.country}</br>`;
-							markerStr += `Category: ${satV.categories}</br>`;
+					if (xyV.norad_id == satV.number) {
+						var markerStr = '';
+						markerStr += `${satV.name}</br>`;
+						markerStr += `Launched: ${satV.launch_date}</br>`;
+						markerStr += `Country: ${satV.country}</br>`;
+						markerStr += `Category: ${satV.categories}</br>`;
 
-							var marker = WE.marker([xyV.coordinates[0], xyV.coordinates[1]]).addTo(map);
-							marker
-								.bindPopup(
-									markerStr,
-									{ maxWidth: 150, closeButton: true }
-								)
-						}
-					});
+						var marker = WE.marker([xyV.coordinates[0], xyV.coordinates[1]]).addTo(map);
+						marker
+							.bindPopup(
+								markerStr,
+								{ maxWidth: 150, closeButton: true }
+							)
+					}
+				});
 			});
 			satCollection.push(satsArr);
 		});
