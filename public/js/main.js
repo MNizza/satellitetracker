@@ -7,10 +7,9 @@ $(document).ready((e) => {
 		dragging: true,
 		scrollWheelZoom: true,
 	});
-	const satCollection = [];
+	var satCollection = [];
 	const initialize = () => {
 		var baselayer = WE.tileLayer(
-			
 			"https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}@2x.jpg?key=WGCEVQZ0rsY9YIzTDjIr",
 			{
 				tileSize: 512,
@@ -31,15 +30,10 @@ $(document).ready((e) => {
 			method: "GET",
 		}).done((res) => {
 			$("#loading").hide();
+			satCollection.push(res);
 
-			var satsArr = [];
 			$.each(res.satellites, (satK, satV) => {
-				satV.location = {};
-				satV.orbitalTrack = res.satelliteOrbit;
 				$.each(res.satelliteXY, (xyK, xyV) => {
-					satV.location = xyV;
-					satsArr.push(satV);
-
 					if (xyV.norad_id == satV.number) {
 						var markerStr = "";
 						markerStr += `${satV.name}</br>`;
@@ -51,19 +45,6 @@ $(document).ready((e) => {
 							xyV.coordinates[0],
 							xyV.coordinates[1],
 						]).addTo(map);
-						// var latlngs = satV.orbitalTrack.coordinates;
-						// $.each(latlngs, (xy) => {
-						// 	var polyline = WE.polygon([xy.lat, xy.lng], {
-						// 		color: "#ff0",
-						// 		opacity: 1,
-						// 		fillColor: "#f00",
-						// 		fillOpacity: 0.1,
-						// 		editable: false,
-						// 		weight: 2,
-						// 	});
-						// 	polyline.addTo(map);
-						// 	console.log
-						// });
 
 						marker.bindPopup(markerStr, { maxWidth: 150, closeButton: true });
 
@@ -72,7 +53,23 @@ $(document).ready((e) => {
 					}
 				});
 			});
-			satCollection.push(satsArr);
+
+			$.each(res.satelliteOrbit, (orbK, orbV) => {
+				$.each(res.satelliteOrbit[orbK].coordinates, (xyTrackK, xyTrackV) => {
+					var polyline = WE.polygon(
+						[xyTrackV.lat, xyTrackV.lng],
+						{
+							color: "#ff0",
+							opacity: 1,
+							fillColor: "#f00",
+							fillOpacity: 0.1,
+							editable: false,
+							weight: 2,
+						}
+					);
+					polyline.addTo(map);
+				});
+			});
 		});
 	};
 	initialize();
