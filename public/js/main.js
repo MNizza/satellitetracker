@@ -49,19 +49,19 @@ $(document).ready((e) => {
 							xyV.coordinates[0],
 							xyV.coordinates[1],
 						]).addTo(map);
-						var latlngs = satV.orbitalTrack.coordinates;
-						$.each(latlngs, (xy) => {
-							var polyline = WE.polygon([xy.lat, xy.lng], {
-								color: "#ff0",
-								opacity: 1,
-								fillColor: "#f00",
-								fillOpacity: 0.1,
-								editable: false,
-								weight: 2,
-							});
-							polyline.addTo(map);
-							console.log(polyline)
-						});
+						// var latlngs = satV.orbitalTrack.coordinates;
+						// $.each(latlngs, (xy) => {
+						// 	var polyline = WE.polygon([xy.lat, xy.lng], {
+						// 		color: "#ff0",
+						// 		opacity: 1,
+						// 		fillColor: "#f00",
+						// 		fillOpacity: 0.1,
+						// 		editable: false,
+						// 		weight: 2,
+						// 	});
+						// 	polyline.addTo(map);
+						// 	console.log
+						// });
 
 						marker.bindPopup(markerStr, { maxWidth: 150, closeButton: true });
 
