@@ -51,12 +51,19 @@ $(document).ready((e) => {
 						]).addTo(map);
 						var latlngs = satV.orbitalTrack.coordinates;
 						$.each(latlngs, (xy) => {
-							var polyline = WE.polygon([xy.lat, xy.lng]);
+							var polyline = WE.polygon([xy.lat, xy.lng], {
+								color: "#ff0",
+								opacity: 1,
+								fillColor: "#f00",
+								fillOpacity: 0.1,
+								editable: false,
+								weight: 2,
+							});
 							polyline.addTo(map);
-						})
-						
+						});
+
 						marker.bindPopup(markerStr, { maxWidth: 150, closeButton: true });
-						
+
 						// zoom the map to the polyline
 						//map.fitBounds(polyline.getBounds());
 					}
