@@ -60,6 +60,7 @@ $(document).ready((e) => {
 								weight: 2,
 							});
 							polyline.addTo(map);
+							console.log(polyline)
 						});
 
 						marker.bindPopup(markerStr, { maxWidth: 150, closeButton: true });
