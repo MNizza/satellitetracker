@@ -1,3 +1,4 @@
+$('#loading').hide();
 $(document).ready((e) => {
 	const map = WE.map("earth_div", {
 		atmosphere: true,
@@ -22,6 +23,7 @@ $(document).ready((e) => {
 			.css("background-size", "100% 100%");
 	};
 	const loadSatellites = () => {
+		$('#loading').show();
 		$.ajax({
 			url: "/satellite",
 			method: "GET",
