@@ -27,15 +27,16 @@ $(document).ready(e => {
 
 	}
 	const loadSatellites = async () => {
-		var a = await $.ajax({
+	var t = await $.ajax({
 			url: "/satellite",
 			method: "GET",
-		}).done(async (res) => {
-			$.each(res.satellites, async (satK, satV) => {
-				$.each(res.satelliteXY, async (xyK, xyV) => {
+		}).done((res) => {
+			var sats = [];
+			$.each(res.satellites, (satK, satV) => {
+				$.each(res.satelliteXY, (xyK, xyV) => {
 					var sat = satV;
 					sat.location = xyV;
-					satCollection.push(sat);
+					sats.push(sat);
 					if (xyV.norad_id == satV.number) {
 						var markerStr = '';
 						markerStr += `${satV.name}</br>`;
@@ -52,6 +53,7 @@ $(document).ready(e => {
 					}
 				});
 			});
+			satCollection.push(sats);
 		});
 	};
 	initialize();
