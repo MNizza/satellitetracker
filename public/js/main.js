@@ -31,11 +31,12 @@ $(document).ready(async e => {
 			url: "/satellite",
 			method: "GET",
 		}).done((res) => {
+			var sats = [];
 			$.each(res.satellites, (satK, satV) => {
 				$.each(res.satelliteXY, (xyK, xyV) => {
 					var sat = satV;
 					sat.location = xyV;
-					satCollection.push(sat);
+					sats.push(sat);
 					if (xyV.norad_id == satV.number) {
 						var markerStr = '';
 						markerStr += `${satV.name}</br>`;
@@ -54,7 +55,6 @@ $(document).ready(async e => {
 			});
 		});
 	};
-
 	initialize();
 	loadSatellites();
 	console.log(satCollection.length);
