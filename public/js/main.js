@@ -24,6 +24,7 @@ $(document).ready((e) => {
 			.css("background-size", "100% 100%");
 	};
 	const loadSatellites = () => {
+		var count = 0;
 		$("#loading").show();
 		$.ajax({
 			url: "/satellite",
@@ -56,18 +57,20 @@ $(document).ready((e) => {
 
 			$.each(res.satelliteOrbit, (orbK, orbV) => {
 				$.each(res.satelliteOrbit[orbK].coordinates, (xyTrackK, xyTrackV) => {
-					// var polyline = WE.polygon(
-					// 	[xyTrackV.lat, xyTrackV.lng],
-					// 	{
-					// 		color: "#ff0",
-					// 		opacity: 1,
-					// 		fillColor: "#f00",
-					// 		fillOpacity: 0.1,
-					// 		editable: false,
-					// 		weight: 2,
-					// 	}
-					// );
-					// polyline.addTo(map);
+					if (count < 5) return;
+					var polyline = WE.polygon(
+						[xyTrackV.lat, xyTrackV.lng],
+						{
+							color: "#ff0",
+							opacity: 1,
+							fillColor: "#f00",
+							fillOpacity: 0.1,
+							editable: false,
+							weight: 2,
+						}
+					);
+					polyline.addTo(map);
+					count++;
 				});
 			});
 		});
