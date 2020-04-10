@@ -26,8 +26,8 @@ $(document).ready(e => {
 		var marker = WE.marker([37.0902, -95.7129]).addTo(map);
 
 	}
-	const loadSatellites = async () => {
-		var t = await $.ajax({
+	const loadSatellites = () => {
+		$.ajax({
 			url: "/satellite",
 			method: "GET",
 		}).done((res) => {
