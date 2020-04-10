@@ -57,14 +57,14 @@ $(document).ready((e) => {
 
 			$.each(res.satelliteOrbit, (orbK, orbV) => {
 				$.each(res.satelliteOrbit[orbK].coordinates, (xyTrackK, xyTrackV) => {
-					if (count > 5) return;
+					if (count > 100) return;
 					var polyline = WE.polygon(
 						[xyTrackV.lat, xyTrackV.lng],
 						{
-							color: "#ff0",
+							color: "#FF0000",
 							opacity: 1,
-							fillColor: "#f00",
-							fillOpacity: 0.1,
+							fillColor: "#FF0000",
+							fillOpacity: 1,
 							editable: false,
 							weight: 2,
 						}
