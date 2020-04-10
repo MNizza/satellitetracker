@@ -33,7 +33,8 @@ $(document).ready(e => {
 		}).done((res) => {
 			var satsArr = [];
 			$.each(res.satellites, (satK, satV) => {
-
+				satV.location = {};
+				satsArr.push(satV);
 				var satObj =
 					$.each(res.satelliteXY, (xyK, xyV) => {
 						satsArr[satK].location = xyV;
