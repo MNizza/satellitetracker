@@ -56,18 +56,18 @@ $(document).ready((e) => {
 
 			$.each(res.satelliteOrbit, (orbK, orbV) => {
 				$.each(res.satelliteOrbit[orbK].coordinates, (xyTrackK, xyTrackV) => {
-					var polyline = WE.polygon(
-						[xyTrackV.lat, xyTrackV.lng],
-						{
-							color: "#ff0",
-							opacity: 1,
-							fillColor: "#f00",
-							fillOpacity: 0.1,
-							editable: false,
-							weight: 2,
-						}
-					);
-					polyline.addTo(map);
+					// var polyline = WE.polygon(
+					// 	[xyTrackV.lat, xyTrackV.lng],
+					// 	{
+					// 		color: "#ff0",
+					// 		opacity: 1,
+					// 		fillColor: "#f00",
+					// 		fillOpacity: 0.1,
+					// 		editable: false,
+					// 		weight: 2,
+					// 	}
+					// );
+					// polyline.addTo(map);
 				});
 			});
 		});
