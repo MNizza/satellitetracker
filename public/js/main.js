@@ -52,6 +52,7 @@ $(document).ready((e) => {
 			});
 			satCollection.push(satsArr);
 		});
+		$('#loading').hide();
 	};
 	initialize();
 	loadSatellites();
