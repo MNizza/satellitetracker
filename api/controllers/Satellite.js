@@ -10,8 +10,8 @@ const SatelliteOrbitModel = require("../models/SatelliteOrbit");
 
 SatelliteController.get("/", async (req, res) => {
 	var satellites = await SatelliteModel.find().limit(10).exec();
-	var satelliteXY = await SatelliteLocationModel.limit(10).find().exec();
-	var satelliteOrbit = await SatelliteOrbitModel.limit(10).find().exec();
+	var satelliteXY = await SatelliteLocationModel.find().limit(10).exec();
+	var satelliteOrbit = await SatelliteOrbitModel.find().limit(10).exec();
 	
 	res.json({ satellites, satelliteXY, satelliteOrbit });
 });
