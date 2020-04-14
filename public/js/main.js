@@ -5,8 +5,8 @@ class Satellite {
 		this.coordinates = coords;
 	}
 
-	orbit = function () {
-		setInterval(() => {
+	orbit = async function () {
+		var tick = await setInterval(() => {
 			$.each(window.satCollection, (satK, satV) => {
 				$.each(window.markers, (mkrK, mkrV) => {
 					if (mkrV.norad_id == satV.norad_id) {
