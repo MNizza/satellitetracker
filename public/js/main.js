@@ -8,16 +8,20 @@ class Satellite {
 	orbit = async function () {
 		var tick = await setInterval(() => {
 			$.each(window.satCollection, (satK, satV) => {
-				$.each(window.markers, (mkrK, mkrV) => {
-					if (mkrV.norad_id == satV.norad_id) {
-						$.each(satV.coordinates, (xyK, xyV) => {
-							if (xyK == this.orbitIndex) {
-								console.log(`Moving ${satV.norad_id} moved to [${xyV.lat}, ${xyV.lng}]`)
-								mkrV.setPosition(xyV.lat, xyV.lng);
-							}
-						});
-					}
-				});
+				if (satV.norad_id == this.norad_id) {
+					$.each(window.markers, (mkrK, mkrV) => {
+						if (mkrV.norad_id == satV.norad_id) {
+							$.each(satV.coordinates, (xyK, xyV) => {
+								if (xyK == this.orbitIndex) {
+									console.log(
+										`Moving ${satV.norad_id} moved to [${xyV.lat}, ${xyV.lng}]`
+									);
+									mkrV.setPosition(xyV.lat, xyV.lng);
+								}
+							});
+						}
+					});
+				}
 			});
 			this.orbitIndex++;
 		}, 60000);
