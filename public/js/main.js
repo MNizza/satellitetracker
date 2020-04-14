@@ -1,31 +1,33 @@
+class Satellite {
+	constructor(id, coords) {
+		this.orbitIndex = 1;
+		this.norad_id = id;
+		this.coordinates = coords;
+	}
+
+	orbit = function () {
+		setInterval(() => {
+			$.each(window.satCollection, (satK, satV) => {
+				$.each(window.markers, (mkrK, mkrV) => {
+					if (mkrV.norad_id == satV.norad_id) {
+						$.each(satV.coordinates, (xyK, xyV) => {
+							if (xyK == this.orbitIndex) {
+								console.log(`Moving ${satV.norad_id} moved to [${xyV.lat}, ${xyV.lng}]`)
+								mkrV.setPosition(xyV.lat, xyV.lng);
+							}
+						});
+					}
+				});
+			});
+			this.orbitIndex++;
+		}, 60000);
+	};
+}
 $("#loading").hide();
+
 window.markers = [];
 window.satellites = [];
-window.updateSatCoords = function (noradID) {
-	orbitI = 0;
-	console.log('Hello')
-
-	setInterval(() => {
-		console.log(`Updating coords for ${noradID}`);
-		//figure out the satellites orbital period
-		$.each(window.markers, (markerK, markerV) => {
-			$.each(window.satellites[0].satelliteOrbit, (orbK, orbV) => {
-				if (markerV.norad_id == noradID && orbV.norad_id == noradID) {
-					if (orbitI > window.satellites[0].satelliteOrbit.length) {
-						window.markers[markerK].setLatLng([orbV.coordinates[orbitI].lat,orbV.coordinates[orbitI].lng])
-						orbitI++;
-					}
-					else if (orbitI = window.satellites[0].satelliteOrbit.length) {
-						window.markers[markerK].setLatLng([orbV.coordinates[orbitI].lat,orbV.coordinates[orbitI].lng])
-						orbitI = 0;
-					}
-				}
-			})
-		})
-	}, 60000)
-
-
-}
+window.satCollection = [];
 
 $(document).ready((e) => {
 	const map = WE.map("earth_div", {
@@ -36,7 +38,6 @@ $(document).ready((e) => {
 		tilting: false,
 		scrollWheelZoom: true,
 	});
-	var satCollection = [];
 	const initialize = () => {
 		var baselayer = WE.tileLayer(
 			"https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}@2x.jpg?key=WGCEVQZ0rsY9YIzTDjIr",
@@ -61,7 +62,7 @@ $(document).ready((e) => {
 		}).done((res) => {
 			$("#loading").hide();
 			window.satellites.push(res);
-
+			var markers = [];
 			$.each(res.satellites, (satK, satV) => {
 				$.each(res.satelliteXY, (xyK, xyV) => {
 					if (xyV.norad_id == satV.number) {
@@ -77,25 +78,29 @@ $(document).ready((e) => {
 						]).addTo(map);
 						marker.norad_id = xyV.norad_id;
 						marker.bindPopup(markerStr, { maxWidth: 150, closeButton: true });
-						window.markers.push(marker);
+						markers.push(marker);
 						// zoom the map to the polyline
 						//map.fitBounds(polyline.getBounds());
 					}
 				});
+				$.each(res.satelliteOrbit, (k, v) => {
+					if (satV.number == v.norad_id) {
+						var sat = new Satellite(satV.number, v.coordinates);
+						window.satCollection.push(sat);
+					}
+				});
 			});
-
+			window.markers = markers;
+			setTimeout(() => {
+				$.each(window.satCollection, (satK, satV) => {
+					satV.orbit();
+				});
+			}, 2000);
 		});
 	};
 
 	initialize();
 	loadSatellites();
-	window.markers = markers;
-
-	setTimeout(() => {
-		$.each(window.satellites[0].satellites,(satK, satV) => {
-			window.updateSatCoords(satV.number);
-		})
-	}, 1000)
 
 	$("#SearchSatBtn").on("click", (e) => {
 		$.each(window.satellites[0].satelliteXY, (satK, satV) => {
