@@ -68,6 +68,9 @@ $(document).ready((e) => {
 			window.satellites.push(res);
 			var markers = [];
 			$.each(res.satellites, (satK, satV) => {
+				var str = "";
+				str += `<option value="${satV.number}">${satV.name}</option>`;
+				$("#satelliteList").append(str);
 				$.each(res.satelliteXY, (xyK, xyV) => {
 					if (xyV.norad_id == satV.number) {
 						var markerStr = "";
@@ -99,6 +102,7 @@ $(document).ready((e) => {
 				$.each(window.satCollection, (satK, satV) => {
 					satV.orbit();
 				});
+				$("#satCount").html(window.satCollection.length);
 			}, 2000);
 		});
 	};
@@ -109,6 +113,14 @@ $(document).ready((e) => {
 	$("#SearchSatBtn").on("click", (e) => {
 		$.each(window.satellites[0].satelliteXY, (satK, satV) => {
 			if (satV.norad_id == $("#NoradID").val()) {
+				map.panTo(satV.coordinates);
+			}
+		});
+	});
+	$("#satelliteList").on("change", (e) => {
+		var noradID = $(e.target).children("option:selected").val();
+		$.each(window.satellites[0].satelliteXY, (satK, satV) => {
+			if (satV.norad_id == noradID) {
 				map.panTo(satV.coordinates);
 			}
 		});
