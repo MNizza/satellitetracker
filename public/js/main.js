@@ -116,12 +116,22 @@ $(document).ready((e) => {
 				map.panTo(satV.coordinates);
 			}
 		});
+		$.each(window.markers, (mkrK, mkrV) => {
+			if (mkrV.norad_id == $("#NoradID").val()) {
+				window.markers[mkrK].openPopup();
+			}
+		});
 	});
 	$("#satelliteList").on("change", (e) => {
 		var noradID = $(e.target).children("option:selected").val();
 		$.each(window.satellites[0].satelliteXY, (satK, satV) => {
 			if (satV.norad_id == noradID) {
 				map.panTo(satV.coordinates);
+			}
+		});
+		$.each(window.markers, (mkrK, mkrV) => {
+			if (mkrV.norad_id == noradID) {
+				window.markers[mkrK].openPopup();
 			}
 		});
 	});
