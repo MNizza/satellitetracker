@@ -1,36 +1,30 @@
 class Satellite {
-	constructor(id, coords, period, speed, spread) {
+	constructor(id, coords, period, speed, spread, opts) {
 		this.orbit_index = 1;
 		this.norad_id = id;
 		this.coordinates = coords;
 		this.velocity = speed;
 		this.orbital_period = period;
 		this.orbital_spread = spread;
+		this.opts = opts;
 	}
-	//(M=m) + (t-TTO)
 	orbit = async function () {
-		const earth_distance = 3963
-		var m, M, t, ttO;
-		M = (earth_distance - this.velocity / this.orbital_period);
-		console.log(M);
 		var tick = await setInterval(() => {
-			$.each(window.satCollection, (satK, satV) => {
-				if (satV.norad_id == this.norad_id) {
-					$.each(window.markers, (mkrK, mkrV) => {
-						if (mkrV.norad_id == satV.norad_id) {
-							$.each(satV.coordinates, (xyK, xyV) => {
-								if (xyK == this.orbit_index) {
-									// console.log(
-									// 	`Moving ${satV.norad_id} moved to [${xyV.lat}, ${xyV.lng}]`
-									// );
-									mkrV.setPosition(xyV.lat, xyV.lng);
-								}
-							});
+			$.each(window.markers, (k, v) => {
+				if (v.norad_id == this.norad_id) {
+					$.each(this.coordinates, (xyK, xyV) => {
+						if (xyK == this.orbit_index) {
+							if (this.opts.debug) {
+								console.log(
+									`Satellite: ${v.norad_id} moved to lat/lng: [${xyV.lat}, ${xyV.lng}]`
+								);
+							}
+							v.setPosition(xyV.lat, xyV.lng);
 						}
 					});
 				}
 			});
-			this.orbitIndex++;
+			this.orbit_index++;
 		}, 60000);
 	};
 }
@@ -94,7 +88,10 @@ $(document).ready((e) => {
 							xyV.coordinates[1],
 						]).addTo(map);
 						marker.norad_id = xyV.norad_id;
-						marker.bindPopup(markerStr, { maxWidth: 150, closeButton: true });
+						marker.coordinates = marker.bindPopup(markerStr, {
+							maxWidth: 150,
+							closeButton: true,
+						});
 						markers.push(marker);
 						// zoom the map to the polyline
 						//map.fitBounds(polyline.getBounds());
@@ -104,7 +101,14 @@ $(document).ready((e) => {
 				});
 				$.each(res.satelliteOrbit, (k, v) => {
 					if (satV.number == v.norad_id) {
-						var sat = new Satellite(satV.number, v.coordinates, satV.orbital_period, tmpSpeed, tmpSpread);
+						var sat = new Satellite(
+							satV.number,
+							v.coordinates,
+							satV.orbital_period,
+							tmpSpeed,
+							tmpSpread,
+							{ debug: true }
+						);
 						window.satCollection.push(sat);
 					}
 				});
