@@ -75,7 +75,6 @@ $(document).ready((e) => {
 				str += `<option value="${satV.number}">${satV.name}</option>`;
 				$("#satelliteList").append(str);
 				$.each(res.satelliteXY, (xyK, xyV) => {
-					v
 					if (xyV.norad_id == satV.number) {
 						var markerStr = "";
 						markerStr += `${satV.name}</br>`;
