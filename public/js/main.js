@@ -6,6 +6,7 @@ class Satellite {
 		this.velocity = speed;
 		this.orbital_period = period;
 		this.orbital_spread = spread;
+		this.current_lat_lng = coords[0];
 		this.opts = opts;
 	}
 	orbit = async function () {
@@ -15,6 +16,7 @@ class Satellite {
 					$.each(this.coordinates, (xyK, xyV) => {
 						if (xyK == this.orbit_index) {
 							if (this.opts.debug) {
+								this.current_lat_lng = [xyV.lat, xyV.lng];
 								console.log(
 									`Satellite: ${v.norad_id} moved to lat/lng: [${xyV.lat}, ${xyV.lng}]`
 								);
@@ -107,7 +109,7 @@ $(document).ready((e) => {
 							satV.orbital_period,
 							tmpSpeed,
 							tmpSpread,
-							{ debug: true }
+							{ debug: false }
 						);
 						window.satCollection.push(sat);
 					}
@@ -140,9 +142,9 @@ $(document).ready((e) => {
 	});
 	$("#satelliteList").on("change", (e) => {
 		var noradID = $(e.target).children("option:selected").val();
-		$.each(window.satellites[0].satelliteXY, (satK, satV) => {
+		$.each(window.satCollection, (satK, satV) => {
 			if (satV.norad_id == noradID) {
-				map.panTo(satV.coordinates);
+				map.panTo(satV.current_lat_lng);
 			}
 		});
 		$.each(window.markers, (mkrK, mkrV) => {
