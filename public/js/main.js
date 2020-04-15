@@ -96,7 +96,7 @@ $(document).ready((e) => {
 				});
 				$.each(res.satelliteOrbit, (k, v) => {
 					if (satV.number == v.norad_id) {
-						var sat = new Satellite(satV.number, v.coordinates, satV.orbital_period, xyV.speed, xyV.footprint_radius);
+						var sat = new Satellite(satV.number, satV.coordinates, satV.orbital_period, xyV.speed, xyV.footprint_radius);
 						window.satCollection.push(sat);
 					}
 				});
