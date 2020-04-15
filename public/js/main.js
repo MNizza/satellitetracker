@@ -1,6 +1,9 @@
 class Satellite {
-	constructor(id, coords) {
+	constructor(id, coords, period, speed, spread) {
 		this.orbitIndex = 1;
+		this.orbitalPeriod = period;
+		this.orbitalSpeed = speed;
+		this.orbitalSpread = spread;
 		this.norad_id = id;
 		this.coordinates = coords;
 	}
@@ -72,6 +75,7 @@ $(document).ready((e) => {
 				str += `<option value="${satV.number}">${satV.name}</option>`;
 				$("#satelliteList").append(str);
 				$.each(res.satelliteXY, (xyK, xyV) => {
+					v
 					if (xyV.norad_id == satV.number) {
 						var markerStr = "";
 						markerStr += `${satV.name}</br>`;
@@ -92,7 +96,7 @@ $(document).ready((e) => {
 				});
 				$.each(res.satelliteOrbit, (k, v) => {
 					if (satV.number == v.norad_id) {
-						var sat = new Satellite(satV.number, v.coordinates);
+						var sat = new Satellite(satV.number, v.coordinates, satV.orbital_period, xyV.speed, xyV.footprint_radius);
 						window.satCollection.push(sat);
 					}
 				});
