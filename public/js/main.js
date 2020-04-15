@@ -1,21 +1,28 @@
 class Satellite {
-	constructor(id, coords) {
-		this.orbitIndex = 1;
+	constructor(id, coords, period, speed, spread) {
+		this.orbit_index = 1;
 		this.norad_id = id;
 		this.coordinates = coords;
+		this.velocity = speed;
+		this.orbital_period = period;
+		this.orbital_spread = spread;
 	}
-
+	//(M=m) + (t-TTO)
 	orbit = async function () {
+		const earth_distance = 3963
+		var m, M, t, ttO;
+		M = (earth_distance - this.velocity / this.orbital_period);
+		console.log(M);
 		var tick = await setInterval(() => {
 			$.each(window.satCollection, (satK, satV) => {
 				if (satV.norad_id == this.norad_id) {
 					$.each(window.markers, (mkrK, mkrV) => {
 						if (mkrV.norad_id == satV.norad_id) {
 							$.each(satV.coordinates, (xyK, xyV) => {
-								if (xyK == this.orbitIndex) {
-									console.log(
-										`Moving ${satV.norad_id} moved to [${xyV.lat}, ${xyV.lng}]`
-									);
+								if (xyK == this.orbit_index) {
+									// console.log(
+									// 	`Moving ${satV.norad_id} moved to [${xyV.lat}, ${xyV.lng}]`
+									// );
 									mkrV.setPosition(xyV.lat, xyV.lng);
 								}
 							});
@@ -69,6 +76,9 @@ $(document).ready((e) => {
 			var markers = [];
 			$.each(res.satellites, (satK, satV) => {
 				var str = "";
+				var tmpSpeed = 0;
+				var tmpSpread = 0;
+
 				str += `<option value="${satV.number}">${satV.name}</option>`;
 				$("#satelliteList").append(str);
 				$.each(res.satelliteXY, (xyK, xyV) => {
@@ -88,11 +98,13 @@ $(document).ready((e) => {
 						markers.push(marker);
 						// zoom the map to the polyline
 						//map.fitBounds(polyline.getBounds());
+						tmpSpeed = xyV.speed;
+						tmpSpread = xyV.orbital_footprint;
 					}
 				});
 				$.each(res.satelliteOrbit, (k, v) => {
 					if (satV.number == v.norad_id) {
-						var sat = new Satellite(satV.number, v.coordinates);
+						var sat = new Satellite(satV.number, v.coordinates, satV.orbital_period, tmpSpeed, tmpSpread);
 						window.satCollection.push(sat);
 					}
 				});
