@@ -19,14 +19,13 @@ SatelliteController.get("/", (req, res) => {
 				sat[i].CURRENT_LAT_LNG = {};
 				let tleArr = [sat[i].TLE_LINE1, sat[i].TLE_LINE2];
 
-				try {
-					sat[i].CURRENT_LAT_LNG =  getLatLngObj(tleArr);
+				sat[i].CURRENT_LAT_LNG = getLatLngObj(tleArr);
 
-					satCollection.push(sat[i]);
+				satCollection.push(sat[i]);
 
-				} catch {
-					console.log(`Error getting Lat/Long for ${sat[i].NORAD_CAT_ID}`);
-				}
+			}
+			else {
+				console.log(`Error getting Lat/Long for ${sat[i].NORAD_CAT_ID}`);
 			}
 		}
 
