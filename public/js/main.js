@@ -72,10 +72,7 @@ $(document).ready((e) => {
 
 				var markerStr = "";
 				markerStr += `${satV.OBJECT_NAME}</br>`;
-				// markerStr += `Launched: ${satV.launch_date}</br>`;
-				// markerStr += `Country: ${satV.country}</br>`;
-				// markerStr += `Category: ${satV.categories}</br>`;
-
+				markerStr += `NORAD Catalog ID: ${satV.NORAD_CAT_ID}`
 				var marker = WE.marker([
 					satV.CURRENT_LAT_LNG.lat,
 					satV.CURRENT_LAT_LNG.lng,

@@ -34,4 +34,16 @@ SatelliteController.get("/", (req, res) => {
 
 
 });
+SatelliteController.get("/build/track/:NORAD_CAT_ID", (req, res) => {
+
+})
+SatelliteController.get("/by/objectType/:OBJECT_TYPE", (req, res) => {
+
+})
+SatelliteController.get("/by/objectName/:OBJECT_NAME", (req, res) => {
+
+})
+SatelliteController.get("/by/noradID/:NORAD_CAT_ID", (req, res) => {
+	
+})
 module.exports = SatelliteController;
