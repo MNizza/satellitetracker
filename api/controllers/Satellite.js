@@ -22,9 +22,10 @@ SatelliteController.get("/", (req, res) => {
 				try {
 					sat[i].CURRENT_LAT_LNG =  getLatLngObj(tleArr);
 
-					satCollection.push(sat[i])
+					satCollection.push(sat[i]);
+
 				} catch {
-					console.log(`Error getting Lat/Long for ${sat[i].NORAD_CAT_ID}`)
+					console.log(`Error getting Lat/Long for ${sat[i].NORAD_CAT_ID}`);
 				}
 			}
 		}
