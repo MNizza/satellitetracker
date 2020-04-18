@@ -16,6 +16,7 @@ html {
 }
 #wrapper #content-wrapper {
 	background-color: #000;
+	height: 100vh;
 }
 #earth_container {
 	padding-top: 10px !important;
@@ -56,6 +57,21 @@ html {
 	margin: none;
 	max-width: unset;
 }
+.tab-content {
+	padding: 15px;
+	height: 19vh;
+	background-color: #272727;
+  }
+  
+  .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+	color: #6e707e;
+	background-color: #272727;
+	border-color: #262626 #252525 #1a1a1a;
+  }
+  
+  .nav-tabs {
+	border-bottom: 1px solid #1a1a1a;
+  }
 @keyframes opacity-breath {
 	0% {
 		opacity: 0;

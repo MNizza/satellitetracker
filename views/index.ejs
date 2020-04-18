@@ -1,10 +1,7 @@
 <div class="container">
 	<div class="row card card-dark">
 		<div id="earth_container" class="col col-lg-12">
-			<div
-				id="earth_div"
-				style="width: 100%; height: 700px; padding: 2px;"
-			></div>
+			<div id="earth_div" style="width: 100%; height: 65vh; padding: 2px;"></div>
 		</div>
 	</div>
 	<div class="row">
@@ -20,9 +17,29 @@
 				<div class="text-center">
 					<span>Satellites:&nbsp;<span id="satCount"></span></span><br />
 				</div>
-				<input id="NoradID" type="text" placeholder="Norad ID" />
-				<button id="SearchSatBtn" class="btn btn-primary">Find</button>
-				<select id="satelliteList"></select>
+				<nav>
+					<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<a class="nav-item nav-link active" id="nav-search-tab" data-toggle="tab" href="#nav-search"
+							role="tab" aria-controls="nav-search" aria-selected="true">search</a>
+						<a class="nav-item nav-link" id="nav-catalog-tab" data-toggle="tab" href="#nav-catalog"
+							role="tab" aria-controls="nav-catalog" aria-selected="false">catalog</a>
+						<a class="nav-item nav-link" id="nav-settings-tab" data-toggle="tab" href="#nav-settings"
+							role="tab" aria-controls="nav-settings" aria-selected="false">settings</a>
+					</div>
+				</nav>
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade show active container" id="nav-search" role="tabpanel"
+						aria-labelledby="nav-search-tab">
+						<input id="NoradID" type="text" placeholder="Norad ID" />
+						<button id="SearchSatBtn" class="btn btn-primary">Find</button>
+						<select id="satelliteList"></select>
+					</div>
+					<div class="tab-pane fade container" id="nav-catalog" role="tabpanel" aria-labelledby="nav-catalog-tab">
+					</div>
+					<div class="tab-pane fade container" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>

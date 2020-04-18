@@ -23,22 +23,55 @@ class Satellite {
 				}
 			});
 			this.orbit_index++;
-		}, 20000);
+		}, 3000);
 	};
 }
+
 $("#loading").hide();
+
 window.satellites = [];
 window.markers = [];
 window.satObjs = [];
+
 $(document).ready((e) => {
 	const map = WE.map("earth_div", {
 		atmosphere: true,
 		center: [37.0902, -95.7129],
-		zoom: 3,
+		zoom: 2,
 		dragging: true,
 		tilting: false,
 		scrollWheelZoom: true,
 	});
+	const addSatelite = (satellite) => {
+		var str = "";
+
+		str += `<option value="${satellite.NORAD_CAT_ID}">${satellite.OBJECT_NAME}</option>`;
+
+		$("#satelliteList").append(str);
+
+		var markerStr = "";
+
+		markerStr += `${satellite.OBJECT_NAME}</br>`;
+		markerStr += `NORAD Catalog ID: ${satellite.NORAD_CAT_ID}`
+
+		var marker = WE.marker([
+			satellite.CURRENT_LAT_LNG.lat,
+			satellite.CURRENT_LAT_LNG.lng,
+		]).addTo(map);
+
+		marker.norad_id = satellite.NORAD_CAT_ID;
+		marker.coordinates = marker.bindPopup(markerStr, {
+			maxWidth: 150,
+			closeButton: true,
+		});
+
+
+		var sat = new Satellite(satellite.NORAD_CAT_ID, satellite.CURRENT_LAT_LNG);
+
+		window.satellites.push(sat);
+		window.markers.push(marker);
+
+	}
 	const initialize = () => {
 		var baselayer = WE.tileLayer(
 			"https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}@2x.jpg?key=WGCEVQZ0rsY9YIzTDjIr",
@@ -58,45 +91,21 @@ $(document).ready((e) => {
 		var count = 0;
 		$("#loading").show();
 		$.ajax({
-			url: "/satellite",
+			url: "/satellite/1",
 			method: "GET",
 		}).done((res) => {
 			$("#loading").hide();
 			$.each(res.satellites, (satK, satV) => {
-				window.satellites.push(satV)
-				//console.log(satV)
-				var str = "";
-
-				str += `<option value="${satV.NORAD_CAT_ID}">${satV.OBJECT_NAME}</option>`;
-				$("#satelliteList").append(str);
-
-				var markerStr = "";
-				markerStr += `${satV.OBJECT_NAME}</br>`;
-				markerStr += `NORAD Catalog ID: ${satV.NORAD_CAT_ID}`
-				var marker = WE.marker([
-					satV.CURRENT_LAT_LNG.lat,
-					satV.CURRENT_LAT_LNG.lng,
-				]).addTo(map);
-				marker.norad_id = satV.NORAD_CAT_ID;
-				marker.coordinates = marker.bindPopup(markerStr, {
-					maxWidth: 150,
-					closeButton: true,
-				});
-				markers.push(marker);
-				var sat = new Satellite(satV.NORAD_CAT_ID, satV.CURRENT_LAT_LNG);
-				window.satObjs.push(sat);
-				//zoom the map to the polyline
-				//map.fitBounds(polyline.getBounds());
+				addSatelite(satV);
 			});
-
 			window.markers = markers;
 
 			setTimeout(() => {
-				$.each(window.satObjs, (satK, satV) => {
+				$.each(window.satellites, (satK, satV) => {
 					satV.orbit();
 				});
 				$("#satCount").html(window.satellites.length);
-			}, 2000);
+			}, 300);
 		})
 	};
 

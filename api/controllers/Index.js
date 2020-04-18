@@ -10,6 +10,10 @@ const SatelliteModel = require("../models/Satellite");
 IndexController.get("/", (req, res) => {
 	res.render("index");
 });
+/**
+ * Endpoint for building the collection
+ * Makes a REST call to Space-Track.org's latest TLE endpoint
+ */
 IndexController.get("/build/tle-collection", (req, res) => {
 	SatelliteModel.collection.drop();
 
