@@ -51,8 +51,11 @@ $(document).ready((e) => {
 
 		var markerStr = "";
 
-		markerStr += `${satellite.OBJECT_NAME}</br>`;
-		markerStr += `NORAD Catalog ID: ${satellite.NORAD_CAT_ID}`
+		markerStr += `<span class="text-center" style="font-weight:bold;width:100%;display:inline-block">${satellite.OBJECT_NAME}</span></br>`;
+		markerStr += `<span class="text-right" style="font-weight:bold;width:45%;display:inline-block">NORAD Catalog ID:</span><span>${satellite.NORAD_CAT_ID}</span></br>`;
+		markerStr += `<span class="text-right" style="font-weight:bold;width:45%;display:inline-block">Object Type:</span><span>${satellite.OBJECT_TYPE}</span></br>`;
+		markerStr += `<span class="text-right" style="font-weight:bold;width:45%;display:inline-block">Revs at Epoch:</span><span>${satellite.REV_AT_EPOCH}</span></br>`;
+		markerStr += `<a style="padding-left: 30px;font-weight:bold" target="_blank" href="https://www.n2yo.com/satellite/?s=${satellite.NORAD_CAT_ID}">Learn more about this object</a>`
 
 		var marker = WE.marker([
 			satellite.CURRENT_LAT_LNG.lat,
@@ -61,7 +64,7 @@ $(document).ready((e) => {
 
 		marker.norad_id = satellite.NORAD_CAT_ID;
 		marker.coordinates = marker.bindPopup(markerStr, {
-			maxWidth: 150,
+			maxWidth: 250,
 			closeButton: true,
 		});
 
@@ -91,7 +94,7 @@ $(document).ready((e) => {
 		var count = 0;
 		$("#loading").show();
 		$.ajax({
-			url: "/satellite/1",
+			url: "/satellite/5000",
 			method: "GET",
 		}).done((res) => {
 			$("#loading").hide();

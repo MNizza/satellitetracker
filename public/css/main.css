@@ -72,6 +72,9 @@ html {
   .nav-tabs {
 	border-bottom: 1px solid #1a1a1a;
   }
+  .we-pp-content {
+	  width: 87%;
+  }
 @keyframes opacity-breath {
 	0% {
 		opacity: 0;
