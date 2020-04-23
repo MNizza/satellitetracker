@@ -55,8 +55,8 @@ $(document).ready((e) => {
 		markerStr += `<span class="text-right" style="font-weight:bold;width:45%;display:inline-block">NORAD Catalog ID:</span><span>${satellite.NORAD_CAT_ID}</span></br>`;
 		markerStr += `<span class="text-right" style="font-weight:bold;width:45%;display:inline-block">Object Type:</span><span>${satellite.OBJECT_TYPE}</span></br>`;
 		markerStr += `<span class="text-right" style="font-weight:bold;width:45%;display:inline-block">Revs at Epoch:</span><span>${satellite.REV_AT_EPOCH}</span></br>`;
-		markerStr += `<a style="padding-left: 30px;font-weight:bold" target="_blank" href="https://www.n2yo.com/satellite/?s=${satellite.NORAD_CAT_ID}">Learn more about this object</a>`
-
+		markerStr += `<a style="padding-left: 30px;font-weight:bold" target="_blank" href="https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=${satellite.OBJECT_ID}">Learn more about this object</a>`
+		
 		var marker = WE.marker([
 			satellite.CURRENT_LAT_LNG.lat,
 			satellite.CURRENT_LAT_LNG.lng,
