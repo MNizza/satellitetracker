@@ -17,11 +17,16 @@ SatelliteController.get("/:limit", (req, res) => {
 			if (sat[i].OBJECT_TYPE !== 'TBD' || sat[i].OBJECT_ID !== "ERROR") {
 
 				sat[i].CURRENT_LAT_LNG = {};
+
 				let tleArr = [sat[i].TLE_LINE1, sat[i].TLE_LINE2];
+				try {
+					sat[i].CURRENT_LAT_LNG = getLatLngObj(tleArr);
+					satCollection.push(sat[i]);
 
-				sat[i].CURRENT_LAT_LNG = getLatLngObj(tleArr);
-
-				satCollection.push(sat[i]);
+				}
+				catch{
+					console.log(`Error locating satellite: ${sat[i].NORAD_CAT_ID}`)
+				}
 
 			}
 			else {

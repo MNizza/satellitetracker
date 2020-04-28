@@ -94,7 +94,7 @@ $(document).ready((e) => {
 		var count = 0;
 		$("#loading").show();
 		$.ajax({
-			url: "/satellite/1000",
+			url: "/satellite/19025",
 			method: "GET",
 		}).done((res) => {
 			$("#loading").hide();
