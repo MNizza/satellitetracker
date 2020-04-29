@@ -20,11 +20,12 @@ SatelliteController.get("/:limit", (req, res) => {
 
 				let tleArr = [sat[i].TLE_LINE1, sat[i].TLE_LINE2];
 				try {
+					
 					sat[i].CURRENT_LAT_LNG = getLatLngObj(tleArr);
 					satCollection.push(sat[i]);
 
 				}
-				catch{
+				catch {
 					console.log(`Error locating satellite: ${sat[i].NORAD_CAT_ID}`)
 				}
 
