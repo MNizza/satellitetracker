@@ -45,6 +45,8 @@ SatelliteController.get("/by/objectType/:operand/:OBJECT_TYPE", (req, res) => {
 
 })
 SatelliteController.get("/:operand/:OBJECT_NAME/:limit", (req, res) => {
+    var satCollection = [];
+
     switch (req.params.operand) {
         case 'like':
             SatelliteModel.find({ OBJECT_NAME: { $regex: req.params.OBJECT_NAME, $options: 'i' } }).limit(parseInt(req.params.limit)).lean().exec((err, sat) => {
