@@ -8,6 +8,7 @@ const express = require("express"),
 	mongoose = require("mongoose"),
 	mongoDB = "mongodb://127.0.0.1/satellitetracker",
 	cron = require("node-cron"),
+	cors = require('cors'),
 	expressLayouts = require("express-ejs-layouts"),
 	IndexController = require("./api/controllers/Index"),
 	SatelliteController = require("./api/controllers/Satellite");
@@ -29,6 +30,8 @@ server.use(express.static(path.join(cdir, "public")));
 server.use(expressLayouts);
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
+server.use(cors());
+
 server.use("/", IndexController);
 server.use("/satellite", SatelliteController);
 
