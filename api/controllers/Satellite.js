@@ -1,12 +1,10 @@
 const express = require("express");
+const http = require("http");
+const Browser = require("zombie");
 const SatelliteController = express.Router();
-const fs = require("fs");
-const path = require("path");
-const cdir = path.join(path.dirname(fs.realpathSync(__filename)), "");
-const unirest = require("unirest");
 const { getLatLngObj } = require("tle.js/dist/tlejs.cjs");
 const SatelliteModel = require("../models/Satellite");
-const NASA_API_KEY = "iGx2fnz2wAaA5w2KBsVthwkqmILO7XQteBzoEMCE";
+
 
 SatelliteController.get("/:limit", (req, res) => {
     var satCollection = [];
@@ -57,8 +55,8 @@ SatelliteController.get("/:operand/:OBJECT_NAME/:limit", (req, res) => {
                         sat[i].CURRENT_LAT_LNG = {};
 
                         let tleArr = [sat[i].TLE_LINE1, sat[i].TLE_LINE2];
-                        try {
 
+                        try {
                             sat[i].CURRENT_LAT_LNG = getLatLngObj(tleArr);
                             satCollection.push(sat[i]);
 
@@ -101,4 +99,35 @@ SatelliteController.get("/by/noradID/:NORAD_CAT_ID", (req, res) => {
         })
     })
 });
+SatelliteController.get("/tle-data/rebuild", (req, res) => {
+    const browser = new Browser();
+    browser.
+    browser.visit('http://space-track.org/auth/login');
+    console.log(browser.body)
+    res.send();
+    //console.log(browser.assert.success().fill('identity', 'marcusanizza@gmail.com').fill('password', "red87skins#1").pressButton("LOGIN"));
+    // console.log(browser.visit("/basicspacedata/query/class/tle_latest/ORDINAL/1/EPOCH/>now-30/orderby/NORAD_CAT_ID/format/json"));
+
+    // let httpOpts = {
+    //     host: "www.space-track.org",
+    //     path: "/basicspacedata/query/class/tle_latest/ORDINAL/1/EPOCH/>now-30/orderby/NORAD_CAT_ID/format/json",
+    //     headers: { 'User-Agent': 'Mozilla/5.0' }
+    // }
+
+    // updateTLE = response => {
+    //     response.on('data', function (chunk) {
+    //         console.log(chunk);
+    //       });
+
+    //     //the whole response has been received, so we just print it out here
+    //     response.on('end', function (data) {
+    //         console.log(data);
+    //         res.send();
+    //     });
+    // }
+
+    // let request = http.request(httpOpts, updateTLE);
+    // console.log(request)
+
+})
 module.exports = SatelliteController;
