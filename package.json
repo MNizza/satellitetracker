@@ -27,6 +27,7 @@
 		"node-cron": "^2.0.3",
 		"satellite.js": "^4.0.0",
 		"tle.js": "^4.0.11",
-		"unirest": "^0.6.0"
+		"unirest": "^0.6.0",
+		"zombie": "^6.1.4"
 	}
 }
